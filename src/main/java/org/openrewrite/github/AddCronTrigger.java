@@ -22,8 +22,6 @@ import org.openrewrite.*;
 import org.openrewrite.internal.StringUtils;
 import org.openrewrite.internal.lang.Nullable;
 import org.openrewrite.yaml.MergeYaml;
-import org.openrewrite.yaml.YamlVisitor;
-import org.openrewrite.yaml.tree.Yaml;
 
 import java.util.Arrays;
 import java.util.List;
