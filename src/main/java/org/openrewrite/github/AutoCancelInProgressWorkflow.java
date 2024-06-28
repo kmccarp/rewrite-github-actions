@@ -45,8 +45,10 @@ public class AutoCancelInProgressWorkflow extends Recipe {
 
     @Override
     public String getDescription() {
-        return "When a workflow is already running and would be triggered again, cancel the existing workflow. " +
-                "See [`styfle/cancel-workflow-action`](https://github.com/styfle/cancel-workflow-action) for details.";
+        return """
+                When a workflow is already running and would be triggered again, cancel the existing workflow. \
+                See [`styfle/cancel-workflow-action`](https://github.com/styfle/cancel-workflow-action) for details.\
+                """;
     }
 
     @Override
@@ -59,10 +61,11 @@ public class AutoCancelInProgressWorkflow extends Recipe {
                 "  with:\n" +
                 "    access_token: ${{ secrets." + accessToken + " }}";
 
-        String defaultAccessTokenTemplate = "" +
-                "- uses: styfle/cancel-workflow-action@0.9.1\n" +
-                "  with:\n" +
-                "    access_token: ${{ github.token }}";
+        String defaultAccessTokenTemplate = """
+                - uses: styfle/cancel-workflow-action@0.9.1
+                  with:
+                    access_token: ${{ github.token }}\
+                """;
 
         return Preconditions.check(new FindSourceFiles(".github/workflows/*.yml"), new YamlIsoVisitor<ExecutionContext>() {
             @Override
@@ -83,7 +86,7 @@ public class AutoCancelInProgressWorkflow extends Recipe {
                             .map(Yaml.Documents.class::cast)
                             .findFirst()
                             .get();
-                    Yaml.Sequence.Entry cancelWorkflowAction = ((Yaml.Sequence) documents.getDocuments().get(0).getBlock()).getEntries().get(0);
+                    Yaml.Sequence.Entry cancelWorkflowAction = ((Yaml.Sequence) documents.getDocuments().getFirst().getBlock()).getEntries().getFirst();
                     cancelWorkflowAction = autoFormat(cancelWorkflowAction.withPrefix("\n"), ctx, getCursor());
                     return s.withEntries(ListUtils.concat(cancelWorkflowAction, s.getEntries()));
                 }

@@ -34,9 +34,11 @@ public class SetupJavaAdoptOpenJDKToTemurin extends Recipe {
 
     @Override
     public String getDescription() {
-        return "Adopt OpenJDK got moved to Eclipse Temurin and won't be updated anymore. " +
-                "It is highly recommended to migrate workflows from adopt to temurin to keep receiving software and security updates. " +
-                "See more details in the [Good-bye AdoptOpenJDK post](https://blog.adoptopenjdk.net/2021/08/goodbye-adoptopenjdk-hello-adoptium/).";
+        return """
+                Adopt OpenJDK got moved to Eclipse Temurin and won't be updated anymore. \
+                It is highly recommended to migrate workflows from adopt to temurin to keep receiving software and security updates. \
+                See more details in the [Good-bye AdoptOpenJDK post](https://blog.adoptopenjdk.net/2021/08/goodbye-adoptopenjdk-hello-adoptium/).\
+                """;
     }
 
     @Override

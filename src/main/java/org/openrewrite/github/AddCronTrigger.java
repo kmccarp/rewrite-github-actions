@@ -32,8 +32,10 @@ import org.jetbrains.annotations.VisibleForTesting;
 @Getter
 public class AddCronTrigger extends Recipe {
     @Option(displayName = "Cron expression",
-            description = "Using the [POSIX cron syntax](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07) or the non standard options" +
-                    " @hourly @daily @weekly @weekdays @weekends @monthly @yearly.",
+            description = """
+                    Using the [POSIX cron syntax](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07) or the non standard options\
+                     @hourly @daily @weekly @weekdays @weekends @monthly @yearly.\
+                    """,
             example = "@daily")
     private final String cron;
 
@@ -98,9 +100,11 @@ public class AddCronTrigger extends Recipe {
         String path = StringUtils.isBlank(workflowFileMatcher) ? ".github/workflows/*.yml" : ".github/workflows/" + workflowFileMatcher;
         return Preconditions.check(new FindSourceFiles(path), new MergeYaml(
                 "$.on",
-                String.format(
-                        "schedule:%n" +
-                        "  - cron: \"%s\"", expression),
+                (
+                        """
+                        schedule:%n\
+                          - cron: "%s"\
+                        """).formatted(expression),
                 true,
                 null).getVisitor());
     }
@@ -130,23 +134,23 @@ public class AddCronTrigger extends Recipe {
         }
 
         public String dailyCron() {
-            return String.format("%d %d * * *", minute(), hour());
+            return "%d %d * * *".formatted(minute(), hour());
         }
 
         public String weeklyCron() {
-            return String.format("%d %d * * %s", minute(), hour(), dayOfWeek());
+            return "%d %d * * %s".formatted(minute(), hour(), dayOfWeek());
         }
 
         public String weekdays() {
-            return String.format("%d %d * * 1-5", minute(), hour());
+            return "%d %d * * 1-5".formatted(minute(), hour());
         }
 
         public String weekends() {
-            return String.format("%d %d * * sat,sun", minute(), hour());
+            return "%d %d * * sat,sun".formatted(minute(), hour());
         }
 
         public String monthlyCron() {
-            return String.format("%d %d %d * *", minute(), hour(), dayOfTheMonth());
+            return "%d %d %d * *".formatted(minute(), hour(), dayOfTheMonth());
         }
 
         public int dayOfTheMonth() {
@@ -159,11 +163,11 @@ public class AddCronTrigger extends Recipe {
         }
 
         public String hourlyCron() {
-            return String.format("* %s * * *", hour());
+            return "* %s * * *".formatted(hour());
         }
 
         public String yearlyCron() {
-            return String.format("%d %d %d %s *", minute(), hour(), dayOfTheMonth(), month());
+            return "%d %d %d %s *".formatted(minute(), hour(), dayOfTheMonth(), month());
         }
     }
 

@@ -46,8 +46,10 @@ public class ChangeDependabotScheduleInterval extends Recipe {
 
     @Override
     public String getDescription() {
-        return "Change the schedule interval for a given package-ecosystem in a `dependabot.yml` configuration file. " +
-                "[The available configuration options for dependabot are listed on GitHub](https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates).";
+        return """
+                Change the schedule interval for a given package-ecosystem in a `dependabot.yml` configuration file. \
+                [The available configuration options for dependabot are listed on GitHub](https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates).\
+                """;
     }
 
     @Override

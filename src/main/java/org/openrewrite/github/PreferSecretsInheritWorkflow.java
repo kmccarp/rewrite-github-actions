@@ -38,10 +38,12 @@ public class PreferSecretsInheritWorkflow extends Recipe {
 
     @Override
     public String getDescription() {
-        return "Pass all secrets to a reusable workflow using `secrets: inherit`. See " +
-               "[Simplify using secrets with reusable workflows]" +
-               "(https://github.blog/changelog/2022-05-03-github-actions-simplify-using-secrets-with-reusable-workflows/)" +
-               " for details.";
+        return """
+               Pass all secrets to a reusable workflow using `secrets: inherit`. See \
+               [Simplify using secrets with reusable workflows]\
+               (https://github.blog/changelog/2022-05-03-github-actions-simplify-using-secrets-with-reusable-workflows/)\
+                for details.\
+               """;
     }
 
     @Override
@@ -83,7 +85,7 @@ public class PreferSecretsInheritWorkflow extends Recipe {
                         Pattern secretPattern = Pattern.compile("\\$\\{\\{\\s*secrets." + key + "\\s*}}");
 
                         Yaml.Block value = entry.getValue();
-                        return (value instanceof Scalar && secretPattern.matcher(((Scalar) value).getValue()).matches());
+                        return (value instanceof Scalar s && secretPattern.matcher(s.getValue()).matches());
                     }
                 });
     }
